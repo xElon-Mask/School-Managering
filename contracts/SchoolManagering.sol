@@ -8,7 +8,6 @@ contract SchoolManagering {
     struct Rating {
         string subject;
         uint rating;
-
     }
 
     struct Pupil {
@@ -30,6 +29,15 @@ contract SchoolManagering {
         require(firstNameOfAddress.length == 0, "This student is already registered");
         pupils[_pupilAddress].firstName = _firstName;
         pupils[_pupilAddress].lastName = _lastName;
+    }
+
+    function addRating(address _pupilAddress, uint _rating, string memory _subject) public {
+        require(msg.sender == owner, "Only administrator of School");
+        bytes memory firstNameOfAddress = bytes(pupils[_pupilAddress].firstName);
+        require(firstNameOfAddress.length > 0, "This student is not registered at our school");
+        pupils[_pupilAddress].ratings[pupils[_pupilAddress].numberOfRatings].rating = _rating;
+        pupils[_pupilAddress].ratings[pupils[_pupilAddress].numberOfRatings].subject = _subject;
+        pupils[_pupilAddress].numberOfRatings++;
     }
 
 }
