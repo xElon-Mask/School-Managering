@@ -24,5 +24,13 @@ contract SchoolManagering {
         owner = msg.sender;
     }
 
+    function addPupil(address _pupilAddress, string memory _firstName, string memory _lastName) public {
+        require(msg.sender == owner, "Only administrator of School");
+        bytes memory firstNameOfAddress = bytes(pupils[_pupilAddress].firstName);
+        require(firstNameOfAddress.length == 0, "This student is already registered");
+        pupils[_pupilAddress].firstName = _firstName;
+        pupils[_pupilAddress].lastName = _lastName;
+    }
+
 }
 
