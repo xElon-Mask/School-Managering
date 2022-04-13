@@ -40,5 +40,15 @@ contract SchoolManagering {
         pupils[_pupilAddress].numberOfRatings++;
     }
 
+    function getRating(address _pupilAddress) public view returns(uint[] memory) {
+        require(msg.sender == owner, "Only administrator of School");
+        uint numberRatingsThisPupil = pupils[_pupilAddress].numberOfRatings;
+        uint[] memory ratings = new uint[](numberRatingsThisPupil);
+        for(uint i = 0; i < numberRatingsThisPupil; i++) {
+            ratings[i] = pupils[_pupilAddress].ratings[i].rating;
+        }
+        return ratings;
+    }
+
 }
 
